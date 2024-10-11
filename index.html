@@ -69,20 +69,23 @@
             color: #179fc9;
         }
 
-        .play-now-button {
-            background-color: #555;
-            color: #ffffff;
+        .play-now-button, .language-button {
+            background-color: rgba(255, 255, 255, 0.025);
+            color: #179fc9;
             border: none;
             border-radius: 5px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
             margin: 5px;
+            box-shadow: 0 4px 15px rgba(23, 159, 201, 0.8);
         }
 
-        .play-now-button:hover {
+        .play-now-button:hover, .language-button:hover {
             background-color: #179fc9;
+            color: #ffffff;
+            box-shadow: 0 6px 15px rgba(23, 159, 201, 0.8);
         }
 
         @media only screen and (max-width: 768px) {
@@ -115,7 +118,7 @@
     <div class="header">
         <h1 id="header-title">Welcome to the World of The Savage</h1>
         <p id="header-subtitle">Your epic adventure begins here!</p>
-        <button class="button" id="language-button" onclick="toggleLanguage()">เปลี่ยนเป็นภาษาไทย</button>
+        <button class="button language-button" id="language-button" onclick="toggleLanguage()">เปลี่ยนเป็นภาษาไทย</button>
     </div>
 
     <div class="game-container">
@@ -151,12 +154,12 @@
                 document.getElementById("header-title").textContent = "ยินดีต้อนรับสู่โลกของ The Savage";
                 document.getElementById("header-subtitle").textContent = "การผจญภัยครั้งยิ่งใหญ่ของคุณเริ่มต้นที่นี่!";
                 document.getElementById("game-desc-1").textContent = "สำรวจดันเจี้ยนและค้นหาสมบัติล้ำค่า";
-                document.getElementById("game-desc-2").textContent = "ต่อสู้กับบอสที่แข็งแกร่งร่วมกับเพื่อนของคุณ";
-                document.getElementById("game-desc-3").textContent = "สำรวจโลกกว้างใหญ่ที่เต็มไปด้วยสิ่งน่าพิศวง";
-                document.getElementById("game-desc-4").textContent = "ท้าทายตัวเองในการบุกดันเจี้ยนที่ยากลำบาก";
+                document.getElementById("game-desc-2").textContent = "ต่อสู้กับบอสทรงพลังพร้อมเพื่อนของคุณ";
+                document.getElementById("game-desc-3").textContent = "สำรวจโลกกว้างใหญ่ที่เต็มไปด้วยสิ่งมหัศจรรย์";
+                document.getElementById("game-desc-4").textContent = "ท้าทายตัวเองในดันเจี้ยนที่ยากลำบาก";
                 document.getElementById("game-title").textContent = "The Savage";
-                document.getElementById("game-info-1").textContent = "สำรวจดินแดนอันกว้างใหญ่ ต่อสู้กับศัตรูที่ดุร้าย เล่นเกมที่ทุกคนพูดถึงและเข้าร่วมชุมชนของนักผจญภัยทั่วโลก!";
-                document.getElementById("language-button").textContent = "Change to English";
+                document.getElementById("game-info-1").textContent = "สำรวจดินแดนกว้างใหญ่, ต่อสู้กับศัตรูที่ดุร้าย, เล่นเกมที่ทุกคนกำลังพูดถึงและเข้าร่วมกับชุมชนนักผจญภัยทั่วโลก!";
+                document.getElementById("language-button").textContent = "Switch to English";
                 language = "th";
             } else {
                 document.getElementById("header-title").textContent = "Welcome to the World of The Savage";
@@ -164,7 +167,7 @@
                 document.getElementById("game-desc-1").textContent = "Explore the dungeons and find rare treasures.";
                 document.getElementById("game-desc-2").textContent = "Fight powerful bosses with your friends.";
                 document.getElementById("game-desc-3").textContent = "Explore a vast open world filled with wonders.";
-                document.getElementById("game-desc-4").textContent = "Challenge yourself in difficult and dungeons.";
+                document.getElementById("game-desc-4").textContent = "Challenge yourself in difficult dungeons.";
                 document.getElementById("game-title").textContent = "The Savage";
                 document.getElementById("game-info-1").textContent = "Explore vast lands, fight fierce enemies, Play the game that everyone is talking about and join the community of adventurers worldwide!";
                 document.getElementById("language-button").textContent = "เปลี่ยนเป็นภาษาไทย";
@@ -172,50 +175,46 @@
             }
         }
 
-        function rotateImage(event, image) {
-            const rect = image.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const deltaX = (x - centerX) / centerX;
-            const deltaY = (y - centerY) / centerY;
-            const rotationY = deltaX * 10;
-            const rotationX = -deltaY * 10;
-            image.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
+        function rotateImage(event, img) {
+            var rect = img.getBoundingClientRect();
+            var x = event.clientX - rect.left;
+            var y = event.clientY - rect.top;
+            var centerX = rect.width / 2;
+            var centerY = rect.height / 2;
+            var deltaX = (x - centerX) / centerX;
+            var deltaY = (y - centerY) / centerY;
+            var rotateY = deltaX * 15;
+            var rotateX = -deltaY * 15;
+            img.style.transform = 'rotateY(' + rotateY + 'deg) rotateX(' + rotateX + 'deg)';
         }
 
-        function resetImage(image) {
-            image.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        function resetImage(img) {
+            img.style.transform = 'rotateY(0deg) rotateX(0deg)';
         }
-
-        document.addEventListener('click', (event) => {
-            const circle = document.createElement('div');
-            circle.className = 'circle';
-            document.body.appendChild(circle);
-            const size = Math.random() * 50 + 50;
-            circle.style.width = size + 'px';
-            circle.style.height = size + 'px';
-            circle.style.left = event.pageX - size / 2 + 'px';
-            circle.style.top = event.pageY - size / 2 + 'px';
-            setTimeout(() => {
-                circle.remove();
-            }, 500);
-        });
 
         function preventClick(event) {
             event.preventDefault();
+            var circle = document.createElement("div");
+            circle.className = "circle";
+            document.body.appendChild(circle);
+            var x = event.clientX;
+            var y = event.clientY;
+            circle.style.left = (x - 25) + "px";
+            circle.style.top = (y - 25) + "px";
+            setTimeout(function () {
+                circle.remove();
+            }, 500);
         }
 
-        function preventF12(e) {
-            if (e.keyCode == 123) {
-                return false;
+        function preventMouseDown(event) {
+            if (event.button === 2) {
+                event.preventDefault();
             }
         }
 
-        function preventMouseDown(e) {
-            if (e.button == 2) {
-                return false;
+        function preventF12(event) {
+            if (event.key === "F12") {
+                event.preventDefault();
             }
         }
     </script>
