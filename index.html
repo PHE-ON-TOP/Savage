@@ -11,8 +11,8 @@
             padding: 0;
             background: linear-gradient(to bottom, #1a1a1a, #000000);
             color: #179fc9;
-            user-select: none; /* Prevent text selection */
-            position: relative; /* For absolute positioning of circles */
+            user-select: none;
+            position: relative;
         }
         .header {
             text-align: center;
@@ -99,6 +99,7 @@
             border: 8px solid rgba(23, 159, 201, 0.8);
             transform: scale(0);
             animation: expandFade 0.5s ease-out forwards;
+            pointer-events: none;
         }
 
         @keyframes expandFade {
@@ -119,19 +120,19 @@
 
     <div class="game-container">
         <div class="game-item">
-            <img class="game-image" src="https://github.com/Sylraz-X/Pictures/blob/main/Dungeons1.png?raw=true" alt="Dungeons" onmousemove="rotateImage(event, this)" onmouseleave="resetImage(this)">
+            <img class="game-image" src="https://github.com/Sylraz-X/Pictures/blob/main/Dungeons1.png?raw=true" alt="Dungeons" onmousemove="rotateImage(event, this)" onmouseleave="resetImage(this)" onclick="preventClick(event)">
             <p id="game-desc-1">Explore the dungeons and find rare treasures.</p>
         </div>
         <div class="game-item">
-            <img class="game-image" src="https://github.com/Sylraz-X/Pictures/blob/main/Boss.png?raw=true" alt="??? " onmousemove="rotateImage(event, this)" onmouseleave="resetImage(this)">
+            <img class="game-image" src="https://github.com/Sylraz-X/Pictures/blob/main/Boss.png?raw=true" alt="??? " onmousemove="rotateImage(event, this)" onmouseleave="resetImage(this)" onclick="preventClick(event)">
             <p id="game-desc-2">Fight powerful bosses with your friends.</p>
         </div>
         <div class="game-item">
-            <img class="game-image" src="https://github.com/Sylraz-X/Pictures/blob/main/Darkness1.png?raw=true" alt="Darkness" onmousemove="rotateImage(event, this)" onmouseleave="resetImage(this)">
+            <img class="game-image" src="https://github.com/Sylraz-X/Pictures/blob/main/Darkness1.png?raw=true" alt="Darkness" onmousemove="rotateImage(event, this)" onmouseleave="resetImage(this)" onclick="preventClick(event)">
             <p id="game-desc-3">Explore a vast open world filled with wonders.</p>
         </div>
         <div class="game-item">
-            <img class="game-image" src="https://github.com/Sylraz-X/Pictures/blob/main/Graphic1.png?raw=true" alt="Graphic" onmousemove="rotateImage(event, this)" onmouseleave="resetImage(this)">
+            <img class="game-image" src="https://github.com/Sylraz-X/Pictures/blob/main/Graphic1.png?raw=true" alt="Graphic" onmousemove="rotateImage(event, this)" onmouseleave="resetImage(this)" onclick="preventClick(event)">
             <p id="game-desc-4">Challenge yourself in difficult and dungeons.</p>
         </div>
 
@@ -179,41 +180,41 @@
             const centerY = rect.height / 2;
             const deltaX = (x - centerX) / centerX;
             const deltaY = (y - centerY) / centerY;
-            const rotationX = deltaY * -10;
-            const rotationY = -deltaX * -10;
-            image.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) scale(1.1)`;
+            const rotationY = deltaX * 10;
+            const rotationX = -deltaY * 10;
+            image.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
         }
 
         function resetImage(image) {
-            image.style.transition = 'transform 0.15s ease';
-            image.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+            image.style.transform = 'rotateY(0deg) rotateX(0deg)';
         }
 
-        function createCircle(x, y) {
+        document.addEventListener('click', (event) => {
             const circle = document.createElement('div');
-            circle.classList.add('circle');
-            circle.style.width = '100px';
-            circle.style.height = '100px';
-            circle.style.left = `${x - 50}px`;
-            circle.style.top = `${y - 50}px`;
+            circle.className = 'circle';
             document.body.appendChild(circle);
+            const size = Math.random() * 50 + 50;
+            circle.style.width = size + 'px';
+            circle.style.height = size + 'px';
+            circle.style.left = event.pageX - size / 2 + 'px';
+            circle.style.top = event.pageY - size / 2 + 'px';
             setTimeout(() => {
                 circle.remove();
             }, 500);
-        }
-
-        document.body.addEventListener('click', (event) => {
-            createCircle(event.clientX, event.clientY);
         });
 
-        function preventF12(event) {
-            if (event.keyCode === 123) {
+        function preventClick(event) {
+            event.preventDefault();
+        }
+
+        function preventF12(e) {
+            if (e.keyCode == 123) {
                 return false;
             }
         }
 
-        function preventMouseDown(event) {
-            if (event.button === 2) {
+        function preventMouseDown(e) {
+            if (e.button == 2) {
                 return false;
             }
         }
