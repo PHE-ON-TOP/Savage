@@ -9,11 +9,25 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #1a1a1a, #000000, #000000);
+            background: radial-gradient(circle, #179fc9 -125%, #000000 100%);
             color: #179fc9;
             user-select: none;
             position: relative;
+            transition: background 5s ease-in-out;
         }
+
+        @keyframes backgroundFade {
+            0% {
+                background: radial-gradient(circle, #179fc9 -125%, #000000 175%);
+            }
+            50% {
+                background: radial-gradient(circle, #179fc9 -125%, #000000 150%);
+            }
+            100% {
+                background: radial-gradient(circle, #179fc9 -125%, #000000 125%);
+            }
+        }
+        
         .header {
             text-align: center;
             padding: 20px;
@@ -106,6 +120,23 @@
                 opacity: 0;
             }
         }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #333;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #179fc9;
+            transition: background-color 0.3s;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #007b96;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;" onkeydown="return preventF12(event);" onmousedown="return preventMouseDown(event);">
@@ -187,6 +218,9 @@
             image.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
         }
 
+        function preventClick(event) {
+            event.stopPropagation();
+        }
 
         document.addEventListener('click', (event) => {
             const circle = document.createElement('div');
@@ -202,21 +236,18 @@
             }, 500);
         });
 
-        function preventClick(event) {
-            event.preventDefault();
-        }
-
-        function preventF12(e) {
-            if (e.keyCode == 123) {
-                return false;
+        function preventF12(event) {
+            if (event.keyCode === 123) {
+                event.preventDefault();
             }
         }
 
-        function preventMouseDown(e) {
-            if (e.button == 2) {
-                return false;
+        function preventMouseDown(event) {
+            if (event.button === 2) {
+                event.preventDefault();
             }
         }
     </script>
+
 </body>
 </html>
